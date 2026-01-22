@@ -1,0 +1,53 @@
+package com.securescan.model;
+
+public class PhishingIndicator {
+
+    public enum IndicatorType {
+        SUSPICIOUS_URL,
+        URGENCY_LANGUAGE,
+        SENDER_MISMATCH,
+        DOMAIN_MISMATCH,
+        RISKY_ATTACHMENT,
+        SPELLING_ERROR,
+        GENERIC_GREETING,
+        REQUEST_FOR_CREDENTIALS,
+        SUSPICIOUS_LINK_TEXT
+    }
+
+    private IndicatorType type;
+    private String description;
+    private int severityScore;
+    private String evidence;
+
+    public PhishingIndicator() {}
+
+    public PhishingIndicator(IndicatorType type, String description, int severityScore, String evidence) {
+        this.type = type;
+        this.description = description;
+        this.severityScore = severityScore;
+        this.evidence = evidence;
+    }
+
+    public IndicatorType getType() { return type; }
+    public void setType(IndicatorType type) { this.type = type; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+
+    public int getSeverityScore() { return severityScore; }
+    public void setSeverityScore(int severityScore) {
+        this.severityScore = Math.min(100, Math.max(0, severityScore));
+    }
+
+    public String getEvidence() { return evidence; }
+    public void setEvidence(String evidence) { this.evidence = evidence; }
+
+    @Override
+    public String toString() {
+        return "PhishingIndicator{" +
+                "type=" + type +
+                ", severity=" + severityScore +
+                ", description='" + description + '\'' +
+                '}';
+    }
+}
