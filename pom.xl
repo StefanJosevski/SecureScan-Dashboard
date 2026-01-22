@@ -1,26 +1,93 @@
-package com.securescan;
-//this is the first file of our code, it might still have errors and needa fixing
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-public class SecureScanApp extends Application {
+  <groupId>com.securescan</groupId>
+  <artifactId>securescan</artifactId>
+  <version>1.0.0</version>
+  <name>SecureScan</name>
+  <description>Intelligent Phishing Detection and Email Security System</description>
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainView.fxml"));
-        Scene scene = new Scene(loader.load(), 1000, 700);
-        scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <javafx.version>17.0.2</javafx.version>
+    <junit.version>5.9.2</junit.version>
+  </properties>
 
-        primaryStage.setTitle("SecureScan - Email Security System");
-        primaryStage.setScene(scene);
-        primaryStage.setMinWidth(800);
-        primaryStage.setMinHeight(600);
-        primaryStage.show();
-    }
+  <dependencies>
+    <!-- JavaFX Dependencies -->
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>${javafx.version}</version>
+    </dependency>
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-}
+    <!-- JUnit 5 for Testing -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!-- Maven Compiler Plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.10.1</version>
+        <configuration>
+          <source>17</source>
+          <target>17</target>
+        </configuration>
+      </plugin>
+
+      <!-- JavaFX Maven Plugin -->
+      <plugin>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+        <version>0.0.8</version>
+        <configuration>
+          <mainClass>com.securescan.SecureScanApp</mainClass>
+        </configuration>
+      </plugin>
+
+      <!-- Maven Surefire Plugin for Testing -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M7</version>
+      </plugin>
+    </plugins>
+
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*.fxml</include>
+          <include>**/*.css</include>
+          <include>**/*.png</include>
+          <include>**/*.jpg</include>
+        </includes>
+      </resource>
+    </resources>
+  </build>
+</project>
