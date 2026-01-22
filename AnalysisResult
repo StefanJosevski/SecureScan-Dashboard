@@ -1,0 +1,82 @@
+package com.securescan.model;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+public class AnalysisResult {
+
+    public enum RiskLevel {
+        SAFE("Safe", "#4CAF50"),
+        SUSPICIOUS("Suspicious", "#FF9800"),
+        MALICIOUS("Malicious", "#F44336");
+
+        private final String label;
+        private final String color;
+
+        RiskLevel(String label, String color) {
+            this.label = label;
+            this.color = color;
+        }
+
+        public String getLabel() { return label; }
+        public String getColor() { return color; }
+    }
+
+    private Email email;
+    private int riskScore;
+    private RiskLevel riskLevel;
+    private List<PhishingIndicator> indicators;
+    private LocalDateTime analysisDate;
+    private String summary;
+
+    public AnalysisResult() {
+        this.indicators = new ArrayList<>();
+        this.analysisDate = LocalDateTime.now();
+    }
+
+    public AnalysisResult(Email email) {
+        this();
+        this.email = email;
+    }
+
+    public Email getEmail() { return email; }
+    public void setEmail(Email email) { this.email = email; }
+
+    public int getRiskScore() { return riskScore; }
+    public void setRiskScore(int riskScore) {
+        this.riskScore = Math.min(100, Math.max(0, riskScore));
+        this.riskLevel = calculateRiskLevel(this.riskScore);
+    }
+
+    public RiskLevel getRiskLevel() { return riskLevel; }
+
+    public List<PhishingIndicator> getIndicators() { return indicators; }
+    public void addIndicator(PhishingIndicator indicator) {
+        this.indicators.add(indicator);
+    }
+
+    public LocalDateTime getAnalysisDate() { return analysisDate; }
+    public void setAnalysisDate(LocalDateTime analysisDate) {
+        this.analysisDate = analysisDate;
+    }
+
+    public String getSummary() { return summary; }
+    public void setSummary(String summary) { this.summary = summary; }
+
+    private RiskLevel calculateRiskLevel(int score) {
+        if (score < 30) return RiskLevel.SAFE;
+        if (score < 70) return RiskLevel.SUSPICIOUS;
+        return RiskLevel.MALICIOUS;
+    }
+
+    @Override
+    public String toString() {
+        return "AnalysisResult{" +
+                "riskScore=" + riskScore +
+                ", riskLevel=" + riskLevel +
+                ", indicators=" + indicators.size() +
+                ", analysisDate=" + analysisDate +
+                '}';
+    }
+}
